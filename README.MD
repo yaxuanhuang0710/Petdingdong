@@ -1,7 +1,33 @@
-1.	安装python、VS code、MySQL、Memurai后，在通过pip install 文件夹中的requirements.txt，来安装相关依赖包。
+## Description
+During the covid-19, it's hard for the pet owner to care for pets due to quarantine. As a result, we create a website for people nearby to take care of the pets. We use Django framework(HTML/CSS/JavaScripts as front end, Python as backend, MySQL as the database).
 
-2.	在VS code中打开文件夹，并在Mysql中创建名为“django”的数据库，在setting.py中第90行修改连接mysql数据库的密码。然后通过”python manage.py makemigrations”和” python manage.py migrate”来迁移数据库。之后就可以” python manage.py runserver”运行网站。
+## Run the code
+1.	Install dependencies
+    ```
+    pip install requirements.txt
+    ```
 
-3.	初始进入网址为http://127.0.0.1:8000/main
+2.	Initialize the database
+    ```
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+    
+3.  run the project
+    ```
+    python manage.py runserver
+    ```
+    Open your browser and type: `http://127.0.0.1:8000/main` or `http://localhost:8000/main`
 
-4.	数据库中数据可以通过导入，也可自己创建数据进行尝试。（通过” python manage.py createsuperuser”可以创建超级用户，然后在http://127.0.0.1:8000/admin进入后台）
+## Features
+1. Search for a breeder near you and order services
+   Search nearby breeders by pet type, address, time, etc. and order the services they offer (boarding, dog walking, house sitting, etc.)
+   
+2. 1-1 Chat
+    During the transaction, customers can chat one-on-one with the breeder in real time, exchange information about their pets, and ask each other to send photos to find out the latest status of their pets.
+
+3. Rate the breeder
+   After the transaction is completed, you can rate and evaluate the breeder.
+ 
+4. Pet blog
+  Communicate with pet lovers, post articles, view articles, comment on articles, and click on the article author's or commenter's avatar below to enter a one-on-one chat room.
