@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+{% load pagination_tags %}
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>PetDingdong</title>
+     	<link rel="stylesheet" href="{% static 'css/semantic.css'%}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'custom.css'%}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'assets/css/main.css'%}" />
+        <link type="text/css" href="{% static 'css/vendor.css'%}" rel="stylesheet">
+    
+
+      
+    </head>
+    <body>
+<!--导航栏-->
+        <div class="ui inverted fixed menu" style="height:50px;background:rgba(4, 5, 20, 0.356)">
+            <div class="ui container">
+            <div class="ui image"style="margin-top:10px;width:110px;"><a href="{% url 'mainin' %}">
+                <img src="{% static 'images/largelogo.png '%}" alt="" /></div>
+            <a href="{% url 'search' %}" class="item">寻找饲养员</a>  
+            </a>
+            <a href="{% url 'identification' %}" class="item">成为饲养员</a>
+            <a href="{% url 'multi' %}" class="item"></i>宠物广场</a>
+            <a href="{% url 'Help' %}" class="item">帮助</a>
+            
+            <div class="right menu">
+                {% for login1 in login_User %}
+                <a href="{% url 'pmain' %}" class="item">{{login1.ID}}</a>
+                {% endfor %}
+            </div>
+    
+            </div>
+        </div>
+<!--导航栏结束-->
+
+    
+       
+
+
+				<!-- Main -->
+					<div id="main" style="margin-top:100px;">
+						
+             
+             <!-- Section -->
+								<section>
+									<header class="major">
+										<h2>可预约的饲养员 in {{dist}}</h2>
+									</header>
+									<div class="posts">
+                                    {% autopaginate Keeper_list 6 %}
+									{% for keeper in Keeper_list %}
+                                    {% for salary in Salary_list %}
+                                        {% if salary.keeperNo == keeper.keeperNo %}
+										<article>
+											<a href="#" ><img class="ui small left floated image" src='/{{keeper.photo}}' alt="正在加载" /></a>
+                                           
+											<h3>{{keeper.name}}</h3> 
+                                            <div class="ui green circular label">
+                                                {{keeper.sex}} 
+                                            </div>
+                                              <div class="ui green circular label">
+                                                {{keeper.star|floatformat:1}}星
+                                            </div>
+
+                                            <div class="ui green circular label">
+                                                {{salary.service_type}}:{{salary.salary}}元   
+                                             </div>                   
+                                                                 
+                                            <p>{{keeper.name}}的介绍<br><a href="{% url 'sitterInfo' %}?keeperNo={{keeper.keeperNo}}" class="button" style="">查看详情</a></br></p> 
+                                            </article>
+                                        {% endif %}
+                                    {% endfor %}
+											
+												
+											
+										
+									{% endfor %}
+                                    {% paginate %}
+									</div>
+								</section>
+
+					
+														
+		            </div>
+                    
+            <div class="ui vertical  very padded green segment">
+		        <div class="container footer-copyright-and-address">
+                    <span class="copyright">
+                    <p align="center">Copyright© 2020 CCWQ WL HYX MYJ. All Rights Reserved.   柴褚文祺 王乐 黄雅萱 马语嘉 版权所有 </p>
+                    </span>
+		        </div>
+            </div>	
+        </div>
+     
+    </body>
+</html>

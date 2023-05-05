@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>PetDingdong</title>
+        <link rel="stylesheet" href="{% static 'css/semantic.css'%}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'custom.css'%}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'assets/css/main.css'%}" />
+        <link type="text/css" href="{% static 'css/vendor.css'%}" rel="stylesheet">
+
+        <link rel="stylesheet" href="{% static 'css/style1.css'%}" type="text/css" />
+
+
+
+<script src="{% static 'js/jquery-2.0.3.min.js'%}" type="text/javascript"></script>	
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+
+
+	$(".side ul li").hover(function(){
+
+		$(this).find(".sidebox").stop().animate({"width":"124px"},200).css({"opacity":"1","filter":"Alpha(opacity=100)","background":"#ae1c1c"})	
+
+	},function(){
+
+		$(this).find(".sidebox").stop().animate({"width":"54px"},200).css({"opacity":"0.8","filter":"Alpha(opacity=80)","background":"#000"})	
+
+	});
+
+	
+
+});
+
+
+
+//回到顶部
+
+function goTop(){
+
+	$('html,body').animate({'scrollTop':0},600);
+
+}
+
+</script>
+      
+    </head>
+    <body>
+<!--导航栏-->
+        <div class="ui inverted fixed menu" style="height:50px;background:rgba(4, 5, 20, 0.356)">
+            <div class="ui container">
+            <div class="ui image"style="margin-top:10px;width:110px;"><a href="{% url 'mainin' %}">
+                <img src="{% static 'images/largelogo.png '%}" alt="" /></div>
+            <a href="{% url 'search' %}" class="item">寻找饲养员</a>  
+            </a>
+            <a href="{% url 'identification' %}" class="item">成为饲养员</a>
+            <a href="{% url 'multi' %}" class="item"></i>宠物广场</a>
+            <a href="{% url 'Help' %}" class="item">帮助</a>
+            
+            <div class="right menu">
+                {% for login1 in login_User %}
+                <a href="{% url 'pmain' %}" class="item">{{login1.ID}}</a>
+                {% endfor %}
+            </div>
+    
+            </div>
+        </div>
+<!--导航栏结束-->
+            <div class="ui vertical basic segment masthead help" >
+        
+ <!--侧边栏-->
+	<div class="side">
+
+	<ul>
+
+		<li style="border:none;"><a href="javascript:goTop();" class="sidetop"><img src="{% static 'images/top.svg'%}"></a></li>
+
+	</ul>
+
+</div>
+
+   <div id="main" style="margin-top:100px;">
+            <div class="ui green pointing menu">
+                <a class="item active">
+                    主人
+                </a>
+                <a href="{% url 'sitterHelp' %}" class="item">
+                    饲养员
+                </a>
+            </div>
+                <div class="ui green segment">
+<!--one-->
+                    <header class="major">
+						<h2 style="color:green;">开始</h2>
+					</header>
+                    <dl>
+                        <h4>什么是宠叮咚？</h4>
+                        <dd>
+                            <p>宠叮咚（PetDingdong），是一个促成宠物主人与喂养师的双向选择、完善宠物照顾的第三方平台。</p>
+                        </dd>
+					</dl>
+<!--one-->
+                    <header class="major">
+						<h2 style="color:green;">寻找饲养员</h2>
+					</header>
+                    <dl>
+                        <h4>饲养员提供什么服务？</h4>
+                        <dd>
+                            <p>宠叮咚的饲养员可以做任何事情。与迫不及待想要看您的宠物的全国性动物爱好者网络建立联系。</p>
+                            <p>在宠叮咚上，您可以预订：
+                            <br>·    寄宿：您的狗在保姆的家里过夜。 
+                            <br>·    看房子：保姆在家里过夜，照顾宠物的同时也顺便看房子。 
+                            <br>·    遛狗：保姆将带着您的狗，在您家附近的地方走30分钟。
+                            <br>·    上门照看：保姆会在你家停留30分钟，给你的狗喂食，和它一起玩耍。</p>
+                        </dd>
+					</dl>
+
+<!--one-->
+                    <dl>
+                        <h4>如何为我的宠物找到饲养员？</h4>
+                        <dd>
+                            <p>1.  登录宠叮咚网站，点击寻找饲养员<br>
+                                2.  输入您需要的服务信息，点击寻找饲养员进行搜索<br>
+                                3.  浏览你所在地区的饲养员。向下滚动或翻页，选择一个您觉得合适的保姆个人资料，了解更多关于他们的信息。如果你想和他们开始对话，可以点击进入聊天室按钮与他们交流。<br>
+                                4.  与饲养员确定服务细节后，支付宝扫码付款，您的宠物将得到相应的照顾。<br>
+                                <p></p>
+                                【补充资料】<br>
+                                我们建议在你开始搜索的时候联系2~3个宠物保姆。这样，当你准备好预订你的第一个服务时，你会有很多选择。</p>
+                        </dd>
+					</dl>
+
+<!--one-->
+                    <header class="major">
+						<h2 style="color:green;">付款</h2>
+					</header>
+                    <dl>
+                        <h4>我应该给保姆小费吗？</h4>
+                        <dd>
+                            <p>通过宠叮咚预订保姆将始终无现金且方便。您的保姆自行设定费率，预订时从您的信用卡中扣除。就是说，如果您想给他们小费，我们将非常欢迎您！但这不强制。目前，我们没有预订的小费功能。如果您想在住宿期间包括小费，请直接与您的保姆联系。</p>
+                        </dd>
+					</dl>
+
+<!--one-->
+                    <header class="major">
+						<h2 style="color:green;">信任与安全</h2>
+					</header>
+                    <dl>
+                        <h4>宠叮咚为主人提供什么保障？</h4>
+                        <dd>
+                            <p>我们知道您的宠物是你的家庭成员，非常重要，我们希望您对您选择宠物保姆充满信心。因为每一个宠叮咚上的宠物保姆的各项个人资料已经经过宠叮咚团队彻底审查，且通过严格的面试，所以您可以完全放心。</p>
+                        </dd>
+					</dl>
+
+<!--one-->
+                    <header class="major">
+						<h2 style="color:green;">评分与评价</h2>
+					</header>
+                    <dl>
+                        <h4>我如何评价我的宠物保姆？</h4>
+                        <dd>
+                            <p>您可以在个人主页，对您选择的每个宠物保姆进行星级评分和评价，让更多人看到每个宠物保姆的服务水平。</p>
+                        </dd>
+					</dl> 
+                    <hr></hr>
+            <nobr><h5 style="color:green;font-style:italic;text-align: center;">是否对您有帮助？
+            <a class="icon solid fa-heart"></a></h5></nobr>                   
+
+     </div>
+    </div>
+  </div>
+  
+
+            <div class="ui vertical  very padded  segment">
+		        <div class="container footer-copyright-and-address">
+                    <span class="copyright">
+                    <p align="center">Copyright© 2020 CCWQ WL HYX MYJ. All Rights Reserved.   柴褚文祺 王乐 黄雅萱 马语嘉 版权所有 </p>
+                    </span>
+		        </div>
+            </div>	
+<script>
+var heart = document.getElementsByClassName("solid fa-heart");
+    var span = document.getElementsByClassName("count");
+    for(var i = 0 ; i < heart.length ; i++){
+        
+        (function(i){
+            var flag = true; //点击收藏
+            // 点击收藏 【心】 事件
+            heart[i].onclick = function(){
+                if(flag){ //点击收藏
+                    flag = false;
+                    // 添加样式
+                    this.className = "icon solid fa-heart active";
+                    
+                }else{ //点击取消收藏
+                    flag = true;
+                    this.className = "icon solid fa-heart";
+                    
+                }    
+            }
+        })(i); 
+    }
+</script>	
+      
+    </body>
+</html>

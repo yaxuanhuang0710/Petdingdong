@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>“喂养师”认证</title>
+<link href="{% static 'Css-identi/bootstrap.min.css'%}" rel="stylesheet">
+<link href="{% static 'Css-identi/gloab.css'%}" rel="stylesheet">
+<link href="{% static 'Css-identi/index.css'%}" rel="stylesheet">
+<script src="{% static 'Scripts-identi/jquery-1.11.1.min.js'%}"></script>
+<script src="{% static 'Scripts-identi/register.js'%}"></script>
+<link rel="stylesheet" href="{% static 'css/semantic.css'%}" media="screen" title="no title" charset="utf-8">
+<link rel="stylesheet" href="{% static 'custom.css'%}" media="screen" title="no title" charset="utf-8">
+    <style>
+    .ui.vertical.basic.segment.masthead.identification {
+    height: 1500px;
+    background: url('images/mainbackground.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-left: 40px;
+    padding-right: 40px;
+    }  
+    </style>
+    
+        <link type="text/css" href="{% static 'css/vendor.css'%}" rel="stylesheet">
+        <link type="text/css" href="{% static 'css/common.css'%}" rel="stylesheet">
+        <link type="text/css" href="{% static 'css/services.css'%}" rel="stylesheet">
+        <link type="text/css" href="{% static 'css/index.css'%}" rel="stylesheet">
+
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="{% static 'assets-register/bootstrap/css/bootstrap.min.css'%}">
+		<link rel="stylesheet" href="{% static 'assets-register/css/form-elements.css'%}">
+        <link rel="stylesheet" href="{% static 'assets-register/css/style.css'%}">
+
+        <link rel="shortcut icon" href="{% static 'assets-register/ico/favicon.png'%}">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'assets-register/ico/apple-touch-icon-144-precomposed.png'%}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'assets-register/ico/apple-touch-icon-114-precomposed.png'%}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'assets-register/ico/apple-touch-icon-72-precomposed.png'%}">
+        <link rel="apple-touch-icon-precomposed" href="{% static 'assets-register/ico/apple-touch-icon-57-precomposed.png'%}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+        <link rel="stylesheet" href="{% static 'css-login/dmaku.css'%}">
+</head>
+
+<body>
+
+<!--导航栏-->
+        <div class="ui inverted fixed menu" style="height:50px;background:rgba(4, 5, 20, 0.356)">
+            <div class="ui container">
+            <div class="ui image"style="margin-top:10px;width:110px;"><a href="{% url 'mainin' %}">
+                <img src="{% static 'images/largelogo.png '%}" alt="" /></div>
+            <a href="{% url 'search' %}" class="item">寻找饲养员</a>  
+            </a>
+            <a href="{% url 'identification' %}" class="item">成为饲养员</a>
+            <a href="{% url 'multi' %}" class="item"></i>宠物广场</a>
+            <a href="{% url 'Help' %}" class="item">帮助</a>
+            
+            <div class="right menu">
+                {% for login1 in login_User %}
+                <a href="{% url 'pmain' %}" class="item">{{login1.ID}}</a>
+                {% endfor %}
+            </div>
+    
+            </div>
+        </div>
+<!--导航栏结束-->
+<div class="ui vertical basic segment masthead identification" >
+     
+
+
+
+<!--认证-->
+<div class="login-box f-mt10 f-pb50" style="margin-top:100px;">
+	<div class="main bgf">    
+    	<div class="reg-box-pan display-inline">  
+        	<div class="step">        	
+                <ul>
+                    <li class="col-xs-4 on">
+                        <span class="num"><em class="f-r5"></em><i>1</i></span>                	
+                        <span class="line_bg lbg-r"></span>
+                        <p class="lbg-txt">填写信息</p>
+                    </li>
+                    <li class="col-xs-4">
+                        <span class="num"><em class="f-r5"></em><i>2</i></span>
+                        <span class="line_bg lbg-l"></span>
+                        <span class="line_bg lbg-r"></span>
+                        <p class="lbg-txt">等待核查</p>
+                    </li>
+                    <li class="col-xs-4">
+                        <span class="num"><em class="f-r5"></em><i>3</i></span>
+                        <span class="line_bg lbg-l"></span>
+                        <p class="lbg-txt">认证成功</p>
+                    </li>
+                </ul>
+            </div>
+
+
+
+       	<!--details-->
+        <form action="/identification2/" method='POST' enctype="multipart/form-data">
+        {% csrf_token %}     
+    
+       	<div class="reg-box" id="verifyCheck" style="margin-top:20px;">
+            	<div class="part1">                	
+                    <div class="item col-xs-12">
+                    <span class="intelligent-label f-fl"><b class="ftx04">*</b>真实姓名：</span>    
+                        <div class="f-fl item-ifo">
+                            <input name="name" type="text" maxlength="10" class="txt03 f-r3 required" tabindex="1" data-valid="isNonEmpty||between:2-10||isZh" data-error="真实姓名不能为空||真实姓名长度2-10位||只能输入中文" id="adminNo" />   
+                            <span class="ie8 icon-close close hide"></span>                         
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus">2-10位，中文真实姓名</label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>身份证号：</span>    
+                        <div class="f-fl item-ifo">
+                            <input name="ID_number" type="text" class="txt03 f-r3 required" tabindex="2" data-valid="isNonEmpty||isCard" data-error="身份证号不能为空||身份证号码格式不正确" maxlength="18" id="phone" />    
+                            <span class="ie8 icon-close close hide"></span>                        
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus">请填写18位有效的证件号</label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+
+                    <div class="item col-xs-12">
+                    <span class="intelligent-label f-fl"><b class="ftx04">*</b>性别：</span>    
+                        <div class="f-fl item-ifo">
+                            <input name="sex" type="text" maxlength="2" class="txt03 f-r3 required" tabindex="3" data-valid="isNonEmpty" data-error="性别不能为空" />   
+                            <span class="ie8 icon-close close hide"></span>                         
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus">请正确输入“男”或“女”</label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+<!--手机
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>手机号：</span>    
+                        <div class="f-fl item-ifo">
+                            <input name="phone" type="text" class="txt03 f-r3 required" keycodes="tel" tabindex="4" data-valid="isNonEmpty||isPhone" data-error="手机号码不能为空||手机号码格式不正确" maxlength="11" id="phone" /> 
+                            <span class="ie8 icon-close close hide"></span>                           
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus">请填写11位有效的手机号码</label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+-->
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>证件照</span>    
+                        <div class="f-fl item-ifo">
+                           <div class="yanzRight">
+                            <input name="evidence" onchange="uploadImg(this,'preview')" type="file"/>
+                            <span class="dui" id="imgOrder_dui" style="display: none;"></span>
+                            </div>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+                   
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>期望收入：</span>    
+                        <div class="f-fl item-ifo">
+                            <select name="salary" class="ui fluid dropdown">
+                                <option value="45">40-50元/小时</option>
+                                <option value="55">50-60元/小时</option>
+                                <option value="65">>60元/小时</option>
+                            </select>                        
+                            <span class="ie8 icon-close close hide"></span>                           
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus">请选择期望收入，由宠叮咚保留最终解释权</label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+                    
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>宠物类型：</span>    
+                        <div class="f-fl item-ifo">
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="pet_type" value="狗" checked="checked">
+                                <label>狗</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="pet_type" value="猫" checked="checked">
+                                <label>猫</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="pet_type" value="其他">
+                                <label>其他</label>
+                            </div>                       
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus">请勾选可以照顾的宠物品种</label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+
+                     <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>服务类型：</span>    
+                        <div class="f-fl item-ifo">
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="service_type" value="寄宿" checked="checked">
+                                <label>寄宿</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="service_type" value="看房子" >
+                                <label>看房子</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="service_type" value="遛狗" checked="checked">
+                                <label>遛狗</label>
+                            </div>
+                            <div class="ui checkbox">
+                                <input type="checkbox" name="service_type" value="上门照看">
+                                <label>上门照看</label>
+                            </div>
+                        
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus">请勾选可以提供的服务</label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+
+                    <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl"><b class="ftx04">*</b>服务区域：</span>    
+                        <div class="f-fl item-ifo">
+                            <select class="ui fluid dropdown" name="district">
+                                <option value="杨浦区">杨浦区</option>
+                                <option value="徐汇区">徐汇区</option>
+                                <option value="黄浦区">黄浦区</option>
+                                <option value="静安区">静安区</option>
+                                <option value="松江区">松江区</option>
+                                <option value="闵行区">闵行区</option>
+                                <option value="嘉定区">嘉定区</option>
+                                <option value="浦东新区">浦东新区</option>
+                                <option value="长宁区">长宁区</option>
+                                <option value="普陀区">普陀区</option>
+                                <option value="虹口区">虹口区</option>
+                                <option value="松江区">松江区</option>
+                                <option value="金山区">金山区</option>
+                                <option value="奉贤区">奉贤区</option>
+                                <option value="崇明区">崇明区</option>
+                                <option value="宝山区">宝山区</option>
+                            </select>                                               
+                            <label class="focus">请填写可提供服务的区域</label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+
+                    
+                    <div class="item col-xs-12">
+                    <span class="intelligent-label f-fl"><b class="ftx04">*</b>简介：</span>    
+                        <div class="f-fl item-ifo">
+                            <input name="intro" type="text" maxlength="500" class="txt03 f-r3 required"  data-valid="isNonEmpty" data-error="简介不能为空" />   
+                            <span class="ie8 icon-close close hide"></span>                         
+                            <label class="icon-sucessfill blank hide"></label>
+                            <label class="focus">500字以内，可以填写您的相关工作经历、性格等等</label>
+                            <label class="focus valid"></label>
+                        </div>
+                    </div>
+
+                     <div class="item col-xs-12">
+                <span class="intelligent-label f-fl"><b class="ftx04">*</b>面试时间：</span>    
+                <div class="f-fl item-ifo">
+                    <select class="ui fluid dropdown" name="interview_time">
+                        <option value="工作日晚上">工作日晚上</option>
+                        <option value="周六上午">周六上午</option>
+                        <option value="周六下午">周六下午</option>
+                        <option value="周六晚上">周六晚上</option>
+                        <option value="周日上午">周日上午</option>
+                        <option value="周日下午">周日下午</option>
+                        <option value="周六晚上">周六晚上</option>
+                    </select>                          
+                    <label class="focus">选择时间参加线上面试，宠叮咚保留最终解释权</label>
+                    <label class="focus valid"></label>
+                </div>
+            </div>
+
+                     <div class="item col-xs-12">
+                        <span class="intelligent-label f-fl">&nbsp;</span>    
+                        <div class="f-fl item-ifo">
+                           <input type="submit" value="下一步" class="btn btn-blue f-r3"/>                        
+                        </div>
+                    </div> 
+                </div>
+        </form>
+
+
+
+
+<!--尝试
+    <div class="part2" style="display:none">
+        <div class="alert alert-info" style="width:700px">我们已经收到您的认证请求，工作人员考核完成后将邮件通知您具体面试时间，请耐心等待。
+        <br />
+        <p class="c-666 f-mt30 f-mb50">页面将在 <strong id="times" class="f-size18">10</strong> 秒钟后跳转，若无响应请点击<a href="{% url 'main' %}" class="c-blue">主页</a></p>
+        </div>
+    </div> 
+
+
+
+
+
+    
+
+
+
+
+
+
+
+<script>
+$(function(){	
+	//第一页的确定按钮
+	$("#btn_part1").click(function(){						
+		if(!verifyCheck._click()) return;
+		$(".part1").hide();
+		$(".part2").show();
+		$(".step li").eq(1).addClass("on");
+	});
+	//第二页的确定按钮
+	$("#btn_part2").click(function(){			
+		if(!verifyCheck._click()) return;
+		$(".part2").hide();
+		$(".part3").show();	
+	});	
+	//第三页的确定按钮
+	$("#btn_part3").click(function(){			
+		if(!verifyCheck._click()) return;
+		$(".part3").hide();
+		$(".part4").show();
+		$(".step li").eq(2).addClass("on");
+		countdown({
+			maxTime:10,
+			ing:function(c){
+				$("#times").text(c);
+			},
+			after:function(){
+				window.location.href="my.html";		
+			}
+		});		
+	});	
+});
+function showoutc(){$(".m-sPopBg,.m-sPopCon").show();}
+function closeClause(){
+	$(".m-sPopBg,.m-sPopCon").hide();		
+}
+</script>
+-->
+
+<script>
+function uploadImg(file,imgNum){
+var widthImg = 200; //显示图片的width
+var heightImg = 200; //显示图片的height
+var div = document.getElementById(imgNum);
+if (file.files && file.files[0]){
+div.innerHTML ='<img id="upImg">'; //生成图片
+var img = document.getElementById('upImg'); //获得用户上传的图片节点
+img.onload = function(){
+img.width = widthImg;
+img.height = heightImg;
+}
+var reader = new FileReader(); //判断图片是否加载完毕
+reader.onload = function(evt){
+if(reader.readyState === 2){ //加载完毕后赋值
+img.src = evt.target.result;
+}
+}
+reader.readAsDataURL(file.files[0]);
+}
+}
+</script>
+<!--1-->
+</body>
+</html>

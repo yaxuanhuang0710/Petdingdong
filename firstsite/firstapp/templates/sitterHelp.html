@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>PetDingdong</title>
+        <link rel="stylesheet" href="{% static 'css/semantic.css'%}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'custom.css'%}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'assets/css/main.css'%}" />
+        <link type="text/css" href="{% static 'css/vendor.css'%}" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="{% static 'css/style1.css'%}" type="text/css" />
+
+
+
+<script src="{% static 'js/jquery-2.0.3.min.js'%}" type="text/javascript"></script>	
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+
+
+	$(".side ul li").hover(function(){
+
+		$(this).find(".sidebox").stop().animate({"width":"124px"},200).css({"opacity":"1","filter":"Alpha(opacity=100)","background":"#ae1c1c"})	
+
+	},function(){
+
+		$(this).find(".sidebox").stop().animate({"width":"54px"},200).css({"opacity":"0.8","filter":"Alpha(opacity=80)","background":"#000"})	
+
+	});
+
+	
+
+});
+
+
+
+//回到顶部
+
+function goTop(){
+
+	$('html,body').animate({'scrollTop':0},600);
+
+}
+
+</script>
+      
+    </head>
+    <body>
+<!--导航栏-->
+        <div class="ui inverted fixed menu" style="height:50px;background:rgba(4, 5, 20, 0.356)">
+            <div class="ui container">
+            <div class="ui image"style="margin-top:10px;width:110px;"><a href="{% url 'mainin' %}">
+                <img src="{% static 'images/largelogo.png '%}" alt="" /></div>
+            <a href="{% url 'search' %}" class="item">寻找饲养员</a>  
+            </a>
+            <a href="{% url 'identification' %}" class="item">成为饲养员</a>
+            <a href="{% url 'multi' %}" class="item"></i>宠物广场</a>
+            <a href="{% url 'Help' %}" class="item">帮助</a>
+            
+            <div class="right menu">
+                {% for login1 in login_User %}
+                <a href="{% url 'pmain' %}" class="item">{{login1.ID}}</a>
+                {% endfor %}
+            </div>
+    
+            </div>
+        </div>
+<!--导航栏结束-->
+            <div class="ui vertical basic segment masthead sitterhelp" >
+<!--侧边栏-->
+	<div class="side">
+
+	<ul>
+
+		<li style="border:none;"><a href="javascript:goTop();" class="sidetop"><img src="{% static 'images/top.svg'%}"></a></li>
+
+	</ul>
+
+</div>       
+        
+   <div id="main" style="margin-top:100px;">
+            <div class="ui green pointing menu">
+                <a href="{% url 'Help' %}" class="item">
+                    主人
+                </a>
+                <a href="{% url 'sitterHelp' %}" class="item active">
+                    饲养员
+                </a>
+            </div>
+                <div class="ui green segment">
+<!--one-->
+                    <header class="major">
+						<h2 style="color:green;">开始</h2>
+					</header>
+                    <dl>
+                        <h4>我怎样才能在宠叮咚网站上成为一个饲养员？</h4>
+                        <dd>
+                            <p>1.  如果你有一个现有的宠叮咚帐户，请登录。如果没有，请创建一个新的帐户。<br>
+                                2.  选择页面顶部的成为饲养员链接，然后填写个人信息申请。<br>
+                                3.  选择面试时间，宠叮咚管理人员会联系您进行面试。<br>
+                                4.  面试通过，恭喜您成为一名合格的饲养员。<br>
+                                </p>
+                        </dd>
+					</dl>
+<!--one-->
+                    <header class="major">
+						<h2 style="color:green;">工作细则</h2>
+					</header>
+                    <dl>
+                        <h4>如何向主人汇报工作？</h4>
+                        <dd>
+                            <p>在照顾宠物期间，每天都需要在与宠物主人的聊天室内向主人发送宠物照片，以汇报工作。</p>
+                        </dd>
+					</dl>
+
+<!--one-->
+                    <header class="major">
+						<h2 style="color:green;">工资结算</h2>
+					</header>
+                    <dl>
+                        <h4>如何获得我的报酬？</h4>
+                        <dd>
+                            <p>宠叮咚将根据您面试时所商谈的价格，按月向您支付。</p>
+                        </dd>
+					</dl>
+
+                    <hr></hr>
+            <nobr><h5 style="color:green;font-style:italic;text-align: center;">是否对您有帮助？
+            <a class="icon solid fa-heart"></a></h5></nobr> 
+     </div>
+    </div>
+  </div>
+  
+
+            <div class="ui vertical  very padded  segment">
+		        <div class="container footer-copyright-and-address">
+                    <span class="copyright">
+                    <p align="center">Copyright© 2020 CCWQ WL HYX MYJ. All Rights Reserved.   柴褚文祺 王乐 黄雅萱 马语嘉 版权所有 </p>
+                    </span>
+		        </div>
+            </div>
+
+<script>
+var heart = document.getElementsByClassName("solid fa-heart");
+    var span = document.getElementsByClassName("count");
+    for(var i = 0 ; i < heart.length ; i++){
+        
+        (function(i){
+            var flag = true; //点击收藏
+            // 点击收藏 【心】 事件
+            heart[i].onclick = function(){
+                if(flag){ //点击收藏
+                    flag = false;
+                    // 添加样式
+                    this.className = "icon solid fa-heart active";
+                    
+                }else{ //点击取消收藏
+                    flag = true;
+                    this.className = "icon solid fa-heart";
+                    
+                }    
+            }
+        })(i); 
+    }
+</script>	
+      
+        
+    </body>
+</html>

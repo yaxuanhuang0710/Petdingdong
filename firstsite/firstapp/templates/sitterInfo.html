@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>PetDingdong</title>
+
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="{% static 'assets-register/bootstrap/css/bootstrap.min.css'%}">
+		<link rel="stylesheet" href="{% static 'assets-register/css/form-elements.css'%}">
+        <link rel="stylesheet" href="{% static 'assets-register/css/style.css'%}">
+
+        <link rel="shortcut icon" href="{% static 'assets-register/ico/favicon.png'%}">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'assets-register/ico/apple-touch-icon-144-precomposed.png'%}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'assets-register/ico/apple-touch-icon-114-precomposed.png'%}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'assets-register/ico/apple-touch-icon-72-precomposed.png'%}">
+        <link rel="apple-touch-icon-precomposed" href="{% static 'assets-register/ico/apple-touch-icon-57-precomposed.png'%}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+        <link rel="stylesheet" href="{% static 'css-login/dmaku.css'%}">
+
+        <script type="text/javascript" src="{% static 'js/vue1.js'%}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/reqwest/2.0.5/reqwest.js"></script>
+        <link rel="stylesheet" href="{% static 'css/semantic.css'%}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'custom.css'%}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'assets/css/main.css'%}" />
+        <link type="text/css" href="{% static 'css/vendor.css'%}" rel="stylesheet">
+
+        <noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css'%}" /></noscript>
+        <link rel="stylesheet" href="{% static 'css/animate.css'%}" media="screen" title="no title">
+        <link href="https://fonts.googleapis.com/css?family=Oswald|Raleway" rel="stylesheet">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.bootcss.com/semantic-ui/2.3.1/semantic.js"></script>
+        <script>
+            $(function () {
+                $(".ui.green.button").on("click",function () {
+                    $(".ui.modal").modal("show");
+                })
+            })
+        </script>
+
+</head>
+<body>
+<!--导航栏-->
+        <div class="ui inverted fixed menu" style="height:50px;background:rgba(4, 5, 20, 0.356)">
+            <div class="ui container">
+            <div class="ui image"style="margin-top:10px;width:110px;"><a href="{% url 'mainin' %}">
+                <img src="{% static 'images/largelogo.png '%}" alt="" /></div>
+            <a href="{% url 'search' %}" class="item">寻找饲养员</a>  
+            </a>
+            <a href="{% url 'identification' %}" class="item">成为饲养员</a>
+            <a href="{% url 'multi' %}" class="item"></i>宠物广场</a>
+            <a href="{% url 'Help' %}" class="item">帮助</a>
+            
+            <div class="right menu">
+                {% for login1 in login_User %}
+                <a href="{% url 'pmain' %}" class="item">{{login1.ID}}</a>
+                {% endfor %}
+            </div>
+    
+            </div>
+        </div>
+<!--导航栏结束-->
+
+<
+			
+<div id="main" style="margin-top:100px;">
+		<!-- Main -->
+		 {% for one in keeper %}
+            <div class="row">
+								<div class="col-6 col-12-xsmall" >
+                                    <h2 class="ui header">
+                                    <img src='/{{one.photo}}' alt="正在加载" class="ui circular small image">
+                                        {{one.name}}
+                                   
+                                    <p></p>
+                                    <div class="ui green circular label">
+                                       {{ one.sex}}
+                                    </div>
+                                    <div class="ui green circular label">
+                                       {{ one.star|floatformat:1}}星
+                                    </div>
+                                    {% for salary in Salary_list %}
+                                    {% if salary.keeperNo == one.keeperNo %}
+                                     <div class="ui green circular label">
+                                        {{salary.service_type}}:{{salary.salary}}元
+                                     </div>                   
+                                                                 
+                                    {% endif %}
+                                    {% endfor %}
+                                     </h2>  
+                                    <p>*下单前请点击右侧按钮进入聊天室与饲养员沟通具体事宜<button class="ui inverted white circular button" ><a href="/chat/{{login_No}}/{{one.realNo}}">进入聊天室</a></button></p>
+                                    
+                                    <div class="ui container">
+                                        <a class="btn btn-link-1 launch-modal" href="#" data-modal-id="modal-register" rel="nofollow" style="color:white;font-size:14px;background-color:green;width:200px;">
+                    下单
+                </a>
+                                    </div>
+                                        
+                                 </div>
+                                  
+				<!-- One -->
+                <div class="col-6 col-12-xsmall" style="text-align:left;">
+					<section id="one">
+						<header class="major" >
+							<h2>关于{{one.name}} </h2>
+                            
+						</header>
+                       	<p>{{one.intro}}
+                        </p>
+					</section>
+                    <p></p>
+
+<!--评论-->
+                    <section id="one">
+						<header class="major">
+							<h2>对{{one.name}}的评论 </h2>
+						</header>
+                        <div class="ui comments" >
+                        {% for comment1 in comment %}
+                            <div class="comment">
+                            {% for user1 in User_list %}
+                                {% if comment1.customerNo == user1.No %}
+                                 <a class="avatar">
+                                     <img src='/{{user1.image}}' alt="正在加载">
+                                </a>                    
+                                                     
+                                <div class="content">
+                                    <a class="author">{{user1.ID}}</a>
+                                {% endif %}
+                            {% endfor %}  
+                                <div class="metadata">
+                                  <span class="date">{{comment1.co_time}}</span>
+                                </div>
+                                <div class="text">
+                                    {{comment1.comment}}
+                                </div>
+                              </div>
+                            </div>
+                             {% endfor %}
+                            </div>
+					</section>
+                     {% endfor  %}
+                    </div>
+                   </div>
+                  </div>
+                    
+                    
+    <hr></hr>
+		        <div class="container footer-copyright-and-address">
+                    <span class="copyright">
+                    <p align="center">Copyright© 2020 CCWQ WL HYX MYJ. All Rights Reserved.   柴褚文祺 王乐 黄雅萱 马语嘉 版权所有 </p>
+                    </span>
+		        </div>
+           
+
+<!-- register -->
+       <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register-label" aria-hidden="true">
+        	<div class="modal-dialog">
+        		<div class="dowebok" id="dowebok">
+        <div class="form-container sign-up-container">
+            <form action="">
+                <h5>扫描二维码支付宝转账</h5>
+                <img src="{% static 'images/zhifubao.jpg'%}" style="width:120px;"></img>支付后请点击
+                <button class="ui inverted white button" ><a href="{% url 'order' %}?userNo=1">支付完成</a></button>跳转页面
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form action="">
+                <h1>服务条款</h1>
+
+                <p>· 请先前往聊天室与饲养员沟通后再付款</p>
+                <p>· 饲养员每天照顾宠物后，都会在聊天室上传宠物照片，以供您确认服务情况</p>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>确认服务条款？</h1>
+                    <p>付款前请再三确认服务条款声明</p>
+                    <button class="ui inverted red button" id="signIn" style="background-color:white;width:200px;height:50px;">查看服务条款</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>准备付款？</h1>
+                    <p>请按照饲养员所要求的价格，点击下方付款按钮</p>
+                    <button class="ui inverted red button" id="signUp" style="background-color:white;width:200px;height:50px;">付款</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Javascript -->
+        <script src="{% static 'assets-register/js/jquery-1.11.1.min.js'%}"></script>
+        <script src="{% static 'assets-register/bootstrap/js/bootstrap.min.js'%}"></script>
+        <script src="{% static 'assets-register/js/jquery.backstretch.min.js'%}"></script>
+        <script src="{% static 'assets-register/js/scripts.js'%}"></script>
+        <script src="{% static 'js-login/dmaku.js'%}"></script>        
+  
+            
+   
+
+           
+
+    </body>
+</html>

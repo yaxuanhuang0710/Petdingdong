@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>PetDingdong</title>
+        <link rel="stylesheet" href="{% static 'css/semantic.css'%}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'custom.css'%}" media="screen" title="no title" charset="utf-8">
+       
+        
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="{% static 'assets-register/bootstrap/css/bootstrap.min.css'%}">
+		<link rel="stylesheet" href="{% static 'assets-register/css/form-elements.css'%}">
+        <link rel="stylesheet" href="{% static 'assets-register/css/style.css'%}">
+
+        <link rel="shortcut icon" href="{% static 'assets-register/ico/favicon.png'%}">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'assets-register/ico/apple-touch-icon-144-precomposed.png'%}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'assets-register/ico/apple-touch-icon-114-precomposed.png'%}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'assets-register/ico/apple-touch-icon-72-precomposed.png'%}">
+        <link rel="apple-touch-icon-precomposed" href="{% static 'assets-register/ico/apple-touch-icon-57-precomposed.png'%}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+        <link rel="stylesheet" href="{% static 'css-login/dmaku.css'%}">
+
+
+
+
+
+
+    </head>
+    <body>
+<!--导航栏-->
+        <div class="ui inverted fixed menu" style="height:50px;background:rgba(4, 5, 20, 0.356)">
+            <div class="ui container">
+            <div class="ui image"style="margin-top:10px;width:110px;"><a href="{% url 'mainin' %}">
+                <img src="{% static 'images/largelogo.png '%}" alt="" /></div>
+            <a href="{% url 'search' %}" class="item">寻找饲养员</a>  
+            </a>
+            <a href="{% url 'identification' %}" class="item">成为饲养员</a>
+            <a href="{% url 'multi' %}" class="item"></i>宠物广场</a>
+            <a href="{% url 'Help' %}" class="item">帮助</a>
+            
+            <div class="right menu">
+                {% for login1 in login_User %}
+                <a href="{% url 'pmain' %}" class="item">{{login1.ID}}</a>
+                {% endfor %}
+            </div>
+    
+            </div>
+        </div>
+<!--导航栏结束-->
+        <div class="ui vertical basic segment masthead" >
+     
+                <h1 class="ui inverted center aligned header slogan" style="font-size:100px;">
+					    宠物之家
+					<p class="inverted sub header" style="Sfont-size:25px;">
+						寻找爱宠的专属饲养员
+					</p>
+                    
+                    <button type="button" name="button" class="ui  green circular button"style="margin-top:20px;font-size:25px;"><a href="{% url 'search' %}">寻找饲养员</a></button>
+				</h1>
+                
+
+			</div>
+
+<!--服务介绍版块-->
+
+
+        <div class="ui inverted red basic segment people-say">
+            <h1 class="ui center aligned header" style="color: darkgreen;font-size:30px;">我们提供的服务</h1>
+            <h5 class="ui center aligned header" style="color: darkgreen;">本站服务基本介绍</h5>
+           
+     
+        
+<div class="container" style="margin-top:180px;">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="carousel slide" id="carousel-367941">
+				<ol class="carousel-indicators">
+					<li data-slide-to="0" data-target="#carousel-367941">
+					</li>
+					<li data-slide-to="1" data-target="#carousel-367941" class="active">
+					</li>
+					<li data-slide-to="2" data-target="#carousel-367941">
+					</li>
+                    <li data-slide-to="3" data-target="#carousel-367941">
+					</li>
+				</ol>
+				<div class="carousel-inner">
+					<div class="item active">
+						<img alt="" src="{% static 'images/dogboarding.jpg'%}" />
+						<div class="carousel-caption">
+                        <h2 style="color:white;">
+                        寄宿
+                        </h2>
+							<h4>
+								如果你需要整晚的宠物护理，这是最好的选择。
+							</h4>
+							<p>
+								预定一个5星级的保姆，当你不在家的时候，无论是周末还是几个星期，他会欢迎你的狗进入他们的家。
+							</p>
+						</div>
+					</div>
+                    <div class="item">
+						<img alt="" src="{% static 'images/doghousesitting.jpg'%}" />
+						<div class="carousel-caption">
+                        <h2 style="color:white;">
+                        看房子
+                        </h2>
+							<h4>
+								保姆提供整晚照看宠物或房子的服务
+							</h4>
+							<p>
+								你完美的宠物保姆也是你完美的房子保姆。如果你要离开一段时间，预定一个五星级的保姆，可以同时照顾你的狗和你的家。
+							</p>
+						</div>
+					</div>
+                    <div class="item">
+						<img alt="" src="{% static 'images/dogwalking.jpg'%}" />
+						<div class="carousel-caption">
+                        <h2 style="color:white;">
+                        遛狗
+                        </h2>
+							<h4>
+								无论何时，当你的狗需要散步，都可以选择这项服务。
+							</h4>
+							<p>
+								与其在午饭时匆匆赶回家，不如预定一个遛狗的人带你的狗散步30分钟。遛狗人可以在你需要的任何时候来照看你的狗。
+							</p>
+						</div>
+					</div>
+                    
+					<div class="item">
+						<img alt="" src="{% static 'images/b.jpg'%}" />
+						<div class="carousel-caption">
+                       <h2 style="color:white;">
+                        上门照看
+                        </h2>
+							<h4>
+								为你的宠物提供个性化的照顾，而不用花费太多。
+							</h4>
+							<p>
+								你的宠物喜欢整天在家里打盹吗? 与其雇佣全职的宠物保姆，不如预约一个宠物保姆一天来看几次宠物，给它们喂食，检查它们的情况。
+							</p>
+						</div>
+					</div>
+					
+                    
+				</div> <a class="left carousel-control" href="#carousel-367941" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-367941" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+			</div>
+		</div>
+	</div>
+</div>
+			
+</div>
+
+
+        
+
+<!--爱宠人士广场-->
+        <div class="ui inverted red basic segment greytest">
+           	<h1 class="ui center aligned header" style="margin-top:45px;margin-bottom:30px;">爱宠人士广场</h1>
+			           
+            <div class="ui three column grid container">
+                {% for article in article_list %}
+                <div class="column">
+                    <div class="ui inverted segment card-view" style="background: url(/{{article.image}});background-size: cover;background-repeat: no-repeat;">
+                        <h3 class="ui header title">{{article.headline}}</h3>
+                        <h4 class="ui header">{{article.date}}</h4>
+                        <div class="ui divider"></div>
+                        <div class="ui green circular label">
+                            {{article.article_type}}
+                        </div>
+                        <span>
+                            {{article.likes}}
+                            <i class="icon unhide"></i>
+                        </span>
+                    </div>
+                </div>
+            {% endfor %}
+           
+
+                
+                <div class='' ></div>
+                
+				<a href="{% url 'multi' %}" target="_blank" data-track-event="" data-event-type="click" data-event="navigation-help" data-qa-id="home-navbar-links-help" type="button" name="button" class="ui inverted green circular button"style="margin-top:20px;">查看更多讨论...</a>
+            </div>
+        </div>
+        </div>
+        </div>
+
+        
+               
+<!--底部-->	
+        <div class="ui inverted vertical footer segment">
+        <div class="ui center aligned container" >
+        <div class="ui stackable inverted divided grid">
+            <div class="six wide column" style="transform: translate(0,-25%); ">
+            
+            <p><img src="{% static 'images/petlogo.png '%}" alt="" /></p>
+            </div>
+            <div class="three wide column">
+            <h4 class="ui inverted header">主人</h4>
+            <div class="ui inverted link list">
+                <a href="{% url 'pmain' %}" class="item">个人主页</a>
+                <a href="{% url 'search' %}" class="item">寻找饲养员</a>
+                <a href="{% url 'multi' %}" class="item">爱宠人士广场</a>
+               
+            </div>
+            </div>
+            <div class="three wide column">
+            <h4 class="ui inverted header">饲养员</h4>
+            <div class="ui inverted link list">
+                <a href="{% url 'identification' %}" class="item">成为饲养员</a>
+                
+            </div>
+            </div>
+            <div class="three wide column">
+            <h4 class="ui inverted header">需要帮助？</h4>
+            <div class="ui inverted link list">
+                <a href="{% url 'Help' %}" class="item">帮助中心</a>
+            </div>
+            </div>
+            
+        </div>
+        <div class="ui inverted section divider"></div>
+        <div class="container footer-copyright-and-address">
+                <span class="copyright">
+                    <p align="center">Copyright© 2020 CCWQ WL HYX MYJ. All Rights Reserved.   柴褚文祺 王乐 黄雅萱 马语嘉 版权所有 </p>
+                </span>
+            </div>
+        </div>
+        </div>
+    </div>	
+
+<!-- register 
+       <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register-label" aria-hidden="true">
+        	<div class="modal-dialog">
+        		<div class="dowebok" id="dowebok">
+        <div class="form-container sign-up-container">
+            <form action="" method='POST'>
+                <h1>注册</h1>
+                <p></p>
+                <p></p>
+                <p></p>
+                {% csrf_token %}
+                    {{form1}}
+                {% if form1.errors %}
+                    {{form1.errors}}
+                {% endif %}
+                <input type="text" placeholder="用户名">
+                <input type="text" placeholder="电子邮箱">
+                <input type="text" placeholder="手机号">
+                <input type="password" placeholder="密码">
+                <button>注册</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form action="" method='POST'>
+                <h1>登录</h1>
+                {% csrf_token %}
+                <input type="text" placeholder="电子邮箱">
+                <input type="password" placeholder="密码">
+                {{form2.as_p}}
+                    {% if form2.errors %}  
+                        {{form2.errors}}
+                    {% endif %}
+                <a href="{% url 'forgetpassword' %}">忘记密码</a>
+                <button><a href={% url 'pmain' %}>登录</a></button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>已有帐号？</h1>
+                    <p>请使用您的帐号进行登录</p>
+                    <button class="ghost" id="signIn">登录</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>没有帐号？</h1>
+                    <p>立即注册加入我们，和我们一起开始吧</p>
+                    <button class="ghost" id="signUp">注册</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+
+
+        	</div>
+        </div>
+
+        <!-- Javascript -->
+        <script src="{% static 'assets-register/js/jquery-1.11.1.min.js'%}"></script>
+        <script src="{% static 'assets-register/bootstrap/js/bootstrap.min.js'%}"></script>
+        <script src="{% static 'assets-register/js/jquery.backstretch.min.js'%}"></script>
+        <script src="{% static 'assets-register/js/scripts.js'%}"></script>
+        <script src="{% static 'js-login/dmaku.js'%}"></script>
+        
+        
+
+        
+    
+    </body>
+</html>

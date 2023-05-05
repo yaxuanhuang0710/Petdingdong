@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+{% load static %}
+{% load pagination_tags %}
+<html>
+	<head>
+		<title>PetDingdong-communication</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets-comm/css/main.css'%}" />
+		 <link rel="stylesheet" href="{% static 'css/semantic.css'%}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'custom.css'%}" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="{% static 'css/style1.css'%}" type="text/css" />
+
+		<script src="{% static 'js/jquery-2.0.3.min.js'%}" type="text/javascript"></script>	
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+
+
+	$(".side ul li").hover(function(){
+
+		$(this).find(".sidebox").stop().animate({"width":"124px"},200).css({"opacity":"1","filter":"Alpha(opacity=100)","background":"#ae1c1c"})	
+
+	},function(){
+
+		$(this).find(".sidebox").stop().animate({"width":"54px"},200).css({"opacity":"0.8","filter":"Alpha(opacity=80)","background":"#000"})	
+
+	});
+
+	
+
+});
+
+
+
+//回到顶部
+
+function goTop(){
+
+	$('html,body').animate({'scrollTop':0},600);
+
+}
+
+</script>
+
+
+
+
+	</head>
+	<body class="single is-preload">
+<body>
+
+<!--导航栏-->
+        <div class="ui inverted fixed menu" style="height:50px;background:rgba(4, 5, 20, 0.356)">
+            <div class="ui container">
+            <div class="ui image"style="margin-top:10px;width:110px;"><a href="{% url 'mainin' %}">
+                <img src="{% static 'images/largelogo.png '%}" alt="" /></div>
+            <a href="{% url 'search' %}" class="item">寻找饲养员</a>  
+            </a>
+            <a href="{% url 'identification' %}" class="item">成为饲养员</a>
+            <a href="{% url 'multi' %}" class="item"></i>宠物广场</a>
+            <a href="{% url 'Help' %}" class="item">帮助</a>
+            
+            <div class="right menu">
+                {% for login1 in login_User %}
+                <a href="{% url 'pmain' %}" class="item">{{login1.ID}}</a>
+                {% endfor %}
+            </div>
+    
+            </div>
+        </div>
+<!--导航栏结束-->
+        <div class="ui vertical basic segment masthead multi" >
+<!--侧边栏-->
+	<div class="side">
+
+	<ul>
+
+		<li><a href="javascript:void(0);" ><div class="sidebox"><img src="{% static 'images/edit.svg'%}"><a href="{% url 'newarticle' %}" style="color:#ffffff;">发布文章</a></div></a></li>
+
+
+		<li style="border:none;"><a href="javascript:goTop();" class="sidetop"><img src="{% static 'images/top.svg'%}"></a></li>
+
+	</ul>
+
+</div>
+
+
+
+				<!-- Main -->
+					<div id="main" style="margin-top:100px;">
+
+						<!-- Post -->
+						{% autopaginate Article_list 4 %}
+							{% for article in Article_list %}
+						<article class="post" >
+							
+																								
+								
+								<header>
+									<div class="title">
+										<h2><a href="{% url 'single' %}?articleNo={{article.articleNo}}">{{article.headline}}</a></h2>
+										
+									</div>
+									{% for user in User_list %}
+									{% if user.No == article.authorNo %}
+									<div class="meta">
+										<time class="published" datetime="2020-08-07">{{article.date}}</time>
+										<a href="#" class="author"><span class="name">{{user.ID}}</span><img src="/{{user.image}}" alt="" /></a>
+									</div>
+									{% endif %}	
+									{% endfor %}
+								</header>
+								<div class="ui grid">
+								<div class="four wide column">
+								<a href="{% url 'single' %}?articleNo={{article.articleNo}}" class="image featured"><img src="/{{article.image}}" alt="正在加载" /></a>
+								</div>
+								<div class="twelve wide column">
+								<p style="-webkit-line-clamp: 3; -webkit-box-orient: vertical;display: -webkit-box;overflow: hidden;">{{article.content}}</p>
+								</div>
+								</div>
+								<footer>
+									<ul class="actions">
+										<li><a href="{% url 'single' %}?articleNo={{article.articleNo}}" class="button large">阅读下文</a></li>
+									</ul>
+									<ul class="stats">
+									
+										<li><a class="icon solid fa-heart"><span class="count">{{article.likes}}</span></a></li>
+									</ul>
+								</footer>
+								
+							
+							</article>
+							{% endfor %}
+							{% paginate %}
+
+
+		
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js'%}"></script>
+			<script src="{% static 'assets/js/browser.min.js'%}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js'%}"></script>
+			<script src="{% static 'assets/js/util.js'%}"></script>
+			<script src="{% static 'assets/js/main.js'%}"></script>
+		
+
+</body>
+ 
+ 
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	var currentPage = 1;
+	var pageSize = 10;
+	var total = 135;
+	var totalsize = 1;
+    
+	$(function() {
+	   if(total > 0){sufa()};
+	})
+ 
+	$(".layui-box").delegate(".pageNumber","click",function () {
+		var no =  parseInt($(this).attr("data"));
+		currentPage = no;
+		sufa();
+	})
+ 
+    $(".pageSizeSelect").on('change',function(){
+		pageSize = parseInt($(this).find("option:selected").val());
+		currentPage = 1;
+		sufa();
+    })
+ 
+	$(".layui-laypage-first").on('click',function(){
+		if(currentPage != 1) {
+			currentPage = 1;
+		    sufa();
+		}	
+    })
+ 
+	$(".layui-laypage-pre").on('click',function(){
+		if(currentPage != 1) {
+			currentPage = currentPage-1;
+		    sufa();
+		}
+    })
+ 
+	$(".layui-laypage-next").on('click',function(){
+		if(currentPage != totalsize) {
+			currentPage = currentPage+1;
+		    sufa();
+		}
+    })
+ 
+	$(".layui-laypage-last").on('click',function(){
+		if(currentPage != totalsize) {
+			currentPage = totalsize;
+		    sufa();
+		}
+    })
+ 
+	function sufa() {
+		var aa = [];
+		aa.push(currentPage);
+		totalsize =  Math.ceil(total/pageSize);
+		for(var i=1 ;i<5;i++) {
+			var a= currentPage+i;
+			var b= currentPage-i;
+			if(aa.length < 5) {
+				if(a<=totalsize) aa.push(a);
+				if(b>0) aa.push(b);
+			}
+		}
+		aa.sort(function compare(val1,val2){return val1-val2;});
+     
+		var content = "";
+		for(var i=0 ;i<aa.length;i++) {
+			if(aa[i] == currentPage) { 
+				content += "<a class=\"pageNumber aaa\" href='#' data='"+aa[i]+"'>"+aa[i]+"</a>"; 
+			}else { 
+				content += "<a class=\"pageNumber\" href='#' data='"+aa[i]+"'>"+aa[i]+"</a>"; 
+			}			
+		}
+        $(".pageNumber").remove();
+		$(".layui-laypage-pre").after(content);
+	}
+})
+</script>
+ 
+<style>   
+	.layui-box a {
+		padding: 5px 10px;
+		text-decoration-line:none;
+		background-color: #f4f4f5;
+		margin-left: 5px;
+		color: #606266;
+		border-radius: 2px;
+	}
+ 
+	.layui-box  .aaa {
+		background-color: #58C7C7;
+		color: #fff;
+	}
+</style>
+
+	</body>
+</html>

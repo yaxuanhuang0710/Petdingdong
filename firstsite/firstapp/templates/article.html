@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>发表动态</title>
+            <link rel="stylesheet" href="{% static 'css/semantic.css'%}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'custom.css'%}" media="screen" title="no title" charset="utf-8">
+       
+        
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="{% static 'assets-register/bootstrap/css/bootstrap.min.css'%}">
+		<link rel="stylesheet" href="{% static 'assets-register/css/form-elements.css'%}">
+        <link rel="stylesheet" href="{% static 'assets-register/css/style.css'%}">
+
+        <link rel="shortcut icon" href="{% static 'assets-register/ico/favicon.png'%}">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'assets-register/ico/apple-touch-icon-144-precomposed.png'%}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'assets-register/ico/apple-touch-icon-114-precomposed.png'%}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'assets-register/ico/apple-touch-icon-72-precomposed.png'%}">
+        <link rel="apple-touch-icon-precomposed" href="{% static 'assets-register/ico/apple-touch-icon-57-precomposed.png'%}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+        <link rel="stylesheet" href="{% static 'css-login/dmaku.css'%}">
+
+
+<style type="text/css">
+			.con4 {
+				width: 300px;
+				height: auto;
+				overflow: hidden;
+				margin: 20px auto;
+				color: #FFFFFF;
+			}
+			
+			.con4 .btn {
+				width: 100%;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+				background: #d8b49c;
+				display: block;
+				font-size: 16px;
+				border-radius: 5px;
+			}
+			
+			.upload {
+				float: left;
+				position: relative;
+			}
+			
+			.upload_pic {
+				display: block;
+				width: 100%;
+				height: 40px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				opacity: 0;
+				border-radius: 5px;
+			}
+			
+			#cvs {
+				border: 1px solid #2ebaae;
+				margin: 20px 20px 20px 20px;
+			}
+			
+
+
+
+		</style>
+</head>
+
+
+<body>
+
+
+<!--导航栏-->
+        <div class="ui inverted fixed menu" style="height:50px;background:rgba(4, 5, 20, 0.356)">
+            <div class="ui container">
+            <div class="ui image"style="margin-top:10px;width:110px;"><a href="{% url 'mainin' %}">
+                <img src="{% static 'images/largelogo.png '%}" alt="" /></div>
+            <a href="{% url 'search' %}" class="item">寻找饲养员</a>  
+            </a>
+            <a href="{% url 'identification' %}" class="item">成为饲养员</a>
+            <a href="{% url 'multi' %}" class="item"></i>宠物广场</a>
+            <a href="{% url 'Help' %}" class="item">帮助</a>
+            
+            <div class="right menu">
+                {% for login1 in login_User %}
+                <a href="{% url 'pmain' %}" class="item">{{login1.ID}}</a>
+                {% endfor %}
+            </div>
+    
+            </div>
+        </div>
+<!--导航栏结束-->
+
+    <div class="ui vertical basic segment masthead article" >
+
+<div class="ui segment" style="margin:70px 170px 0px 170px">
+    <form class="ui form" action="" method='POST' enctype="multipart/form-data" >
+	{% csrf_token %}
+    <div class="ui grid">
+        <div class="twelve wide column">
+        <canvas id="cvs" width="400" height="300"></canvas>
+        </div>
+        <div class="four wide column">
+        <span class="ui button upload" style="height:40px;color:#2ebaae;font-size:15px;margin: 150px 0 0 0">添加封面<input type="file" class="upload_pic" id="upload" name="upload_img"/></span>
+        </div>
+    </div>
+    
+    <div class="ui input">
+        <input type="text" style="width:610px;font-size:20px;" placeholder="请输入标题（最多20个字）" name="title">
+    </div>
+    <hr></hr>
+    <div class="ui input">
+		<textarea type="text" name="content" placeholder="请输入正文..." class="contain form-control" style="font-size:20px;width:610px;height:500px;line-heigt:200px;"></textarea>
+    </div>
+    <hr></hr>
+	<div class="item col-xs-12">
+        <span class="intelligent-label f-fl"style="font-size:16px;"><b class="ftx04">*</b>文章类型</span>    
+            <div class="f-fl item-ifo">
+            <select class="ui fluid dropdown" style="width:610px;font-size:20px;margin-left:80px;height:50px;" name="article_type">
+                <option value="爱宠故事">爱宠故事</option>
+                <option value="科普知识">科普知识</option>
+                <option value="交流讨论">交流讨论</option>
+            </select>                                               
+        <label class="focus">请填写文章类型</label>
+        <label class="focus valid"></label>
+        </div>
+    </div>
+        <button class="ui button" type="submit" style="width:200px;height:40px;color:#2ebaae;font-size:15px;">发表</button>
+	</form>
+
+<script>
+			//获取上传按钮
+			var input1 = document.getElementById("upload");
+			if(typeof FileReader === 'undefined') {
+				//result.innerHTML = "抱歉，你的浏览器不支持 FileReader"; 
+				input1.setAttribute('disabled', 'disabled');
+			} else {
+				input1.addEventListener('change', readFile, false);
+ 
+			}
+ 
+			function readFile() {
+				var file = this.files[0]; //获取上传文件列表中第一个文件
+				if(!/image\/\w+/.test(file.type)) {
+					//图片文件的type值为image/png或image/jpg
+					alert("文件必须为图片！");
+					return false;
+				}
+				// console.log(file);
+				var reader = new FileReader(); //实例一个文件对象
+				reader.readAsDataURL(file); //把上传的文件转换成url
+				//当文件读取成功便可以调取上传的接口
+				reader.onload = function(e) {
+ 
+					var image = new Image();
+					// 设置src属性 
+					image.src = e.target.result;
+					var max = 200;
+					// 绑定load事件处理器，加载完成后执行，避免同步问题
+					image.onload = function() {
+						// 获取 canvas DOM 对象 
+						var canvas = document.getElementById("cvs");
+						// 获取 canvas的 2d 环境对象, 
+						var ctx = canvas.getContext("2d");
+						// canvas清屏 
+						ctx.clearRect(0, 0, canvas.width, canvas.height);
+ 
+						ctx.drawImage(image, 0, 0, 400, 300);
+						
+					};
+				}
+			};
+		</script>
+
+</body>
+</html>

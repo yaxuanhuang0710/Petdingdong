@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    
+    <title>PetDingdong</title>
+        <link rel="stylesheet" href="{% static 'css/semantic.css'%}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'custom.css'%}" media="screen" title="no title" charset="utf-8">
+       
+       
+        
+</head>
+<body>
+<!--导航栏-->
+        <div class="ui inverted fixed menu" style="height:50px;background:rgba(4, 5, 20, 0.356)">
+            <div class="ui container">
+            <div class="ui image"style="margin-top:10px;width:110px;"><a href="{% url 'mainin' %}">
+                <img src="{% static 'images/largelogo.png '%}" alt="" /></div>
+            <a href="{% url 'search' %}" class="item">寻找饲养员</a>  
+            </a>
+            <a href="{% url 'identification' %}" class="item">成为饲养员</a>
+            <a href="{% url 'multi' %}" class="item"></i>宠物广场</a>
+            <a href="{% url 'Help' %}" class="item">帮助</a>
+            
+            <div class="right menu">
+                {% for login1 in login_User %}
+                <a href="{% url 'pmain' %}" class="item">{{login1.ID}}</a>
+                {% endfor %}
+            </div>
+    
+            </div>
+        </div>
+<!--导航栏结束-->
+
+
+    <div class="ui vertical basic segment masthead" >
+        
+       
+
+<!--表单-->
+    <div id="main" style="margin-top:100px;">
+    
+        <form class="ui form" method="get" action="/searchResult/">
+     
+            <div class="inline field">
+                <label><h4 class="ui dividing header" style="color:white">宠物类型:</h4></label>
+                 <div class="ui radio checkbox">
+        <input type="radio" name="petType" checked="checked" value="狗">
+        <label style="color:white;margin-right:20px;">狗</label>
+      </div>
+       <div class="ui radio checkbox">
+        <input type="radio" name="petType" value="猫" >
+        <label style="color:white;margin-right:20px;">猫</label>
+      </div>
+       <div class="ui radio checkbox">
+        <input type="radio" name="petType" value="其他">
+        <label style="color:white;margin-right:20px;">其他</label>
+      </div>
+                
+            </div>
+        <hr></hr>
+  <div class="field">
+    <label><h5 style="margin-top:10px;color:white">服务时间</h5></label>
+   
+    <div class="two fields">
+
+      <div class="field">
+      <h4 class="h6"style="color:white">开始</h4>
+       <input type="date" name="startTime" id="" value=""/>
+      </div>
+       
+      <div class="field">
+  
+				<h4 class="h6"style="color:white">结束</h4>
+		
+				<input type="date" name="endTime" id="" value=""/>
+			</div>
+    
+    </div>
+    <hr></hr>
+  </div>
+
+  <div class="inline fields">
+    <label><h5 class="ui dividing header" style="margin-top:10px;color:white">服务类型</h5></label>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input type="radio" name="serviceType" checked="checked" value="寄宿">
+        <label style="color:white;">寄宿</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input type="radio" name="serviceType" value="看房子">
+        <label style="color:white;">看房子</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input type="radio" name="serviceType" value="上门照看">
+        <label style="color:white;">上门照看</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input type="radio" name="serviceType" value="遛狗">
+        <label style="color:white;">遛狗</label>
+      </div>
+    </div>
+
+  </div>
+
+ <hr></hr>  
+ 
+  <div class="two fields">
+    <div class="field">
+       <label><h5 class="ui dividing header" style="margin-top:10px;color:white">所属区</h5></label>
+      <select class="ui fluid dropdown", name="district">
+        <option value="杨浦区">杨浦区</option>
+        <option value="徐汇区">徐汇区</option>
+        <option value="黄浦区">黄浦区</option>
+        <option value="静安区">静安区</option>
+        <option value="松江区">松江区</option>
+        <option value="闵行区">闵行区</option>
+        <option value="嘉定区">嘉定区</option>
+        <option value="浦东新区">浦东新区</option>
+        <option value="长宁区">长宁区</option>
+        <option value="普陀区">普陀区</option>
+        <option value="虹口区">虹口区</option>
+        <option value="松江区">松江区</option>
+        <option value="金山区">金山区</option>
+        <option value="奉贤区">奉贤区</option>
+        <option value="崇明区">崇明区</option>
+        <option value="宝山区">宝山区</option>
+    
+      </select>
+    </div>
+    <div class="field">
+      <label><h5 class="ui dividing header" style="margin-top:10px;color:white">地址</h5></label>
+      <div class="field">
+        <input type="text" name="address" placeholder="街道/门牌号">
+      </div> 
+    </div>
+       </div>
+  
+ <hr></hr>
+ 
+  
+  <input type="submit" name="sub" value="寻找饲养员" class="ui inverted circular green button" style="margin-top:20px;" /></div> 
+</form>
+</div>
+
+<!--版权所有-->
+<div class="ui vertical  very padded segment">
+		<div class="container footer-copyright-and-address">
+			<span class="copyright">
+				<p align="center">Copyright© 2020 CCWQ WL HYX MYJ. All Rights Reserved.   柴褚文祺 王乐 黄雅萱 马语嘉 版权所有 </p>
+			</span>
+		</div>
+        </div>	
+
+    
+</body>
+</html>

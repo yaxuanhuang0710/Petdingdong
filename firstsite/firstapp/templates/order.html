@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+{% load static %}
+{% load pagination_tags %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>个人主页</title>
+	<link rel="stylesheet" href="{% static 'fontawesome-pmain/css/all.min.css'%}"> <!-- https://fontawesome.com/ -->
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
+    <link href="{% static 'css-pmain/bootstrap.min.css" rel="stylesheet'%}">
+    <link href="{% static 'css-pmain/templatemo-xtra-blog.css'%}" rel="stylesheet">
+    <link href="{% static 'custom.css'%}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/semantic.css'%}" media="screen" title="no title" charset="utf-8">
+
+    <link rel="stylesheet" href="{% static 'assets-comm/css/main.css'%}" />
+    <style type="text/css">
+			.con4 {
+				width: 300px;
+				height: auto;
+				overflow: hidden;
+				margin: 20px auto;
+				color: #FFFFFF;
+			}
+			
+			.con4 .btn {
+				width: 100%;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+				background: #d8b49c;
+				display: block;
+				font-size: 16px;
+				border-radius: 5px;
+			}
+			
+			.upload {
+				float: left;
+				position: relative;
+			}
+			
+			.upload_pic {
+				display: block;
+				width: 100%;
+				height: 40px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				opacity: 0;
+				border-radius: 5px;
+			}
+			
+			#cvs {
+				border: 1px solid white;
+				margin: 20px 0 20px 5px;
+			}
+		</style>
+
+</head>
+
+
+<body>
+	{% for user in User_list %}
+	<header class="tm-header" id="tm-header">
+
+         <div class="tm-header-wrapper">
+            <div class="tm-site-header">
+			<h1 class="text-center" style="font-size:40px;color:white;">{{user.ID}}</h1>
+                <form method="POST" enctype="multipart/form-data" >
+				{% csrf_token %}
+                <image src="/{{user.image}}" width="200" height="200" >
+				<span class="ui inverted button upload" style="height:40px; color:white;">选择头像
+				    <input name="img" type="file" class="upload_pic" id="upload" />
+				</span>
+				<button class="ui inverted button" style="height:40px; color:white;">提交</button>
+				</form>
+            </div>
+            <nav class="tm-nav" id="tm-nav">            
+                <ul>
+                    
+                    <li class="tm-nav-item"><a href="{% url 'pmain' %}" class="tm-nav-link">
+                        <i class="icon heart"></i>
+                        我的文章
+                    </a></li>
+					<li class="tm-nav-item"><a href="{% url 'pmess' %}" class="tm-nav-link">
+                        <i class="icon homepage"></i>
+                        我的消息
+                    <li class="tm-nav-item active"><a href="{% url 'order' %}?userNo=1" class="tm-nav-link">
+                        <i class="icon pet"></i>
+                        我的订单
+                    </a></li>
+                    <li class="tm-nav-item"><a href="{% url 'mainin' %}" class="tm-nav-link">
+                        <i class="icon homepage"></i>
+                        回到主页
+                    </a></li>
+					<li class="tm-nav-item"><a href="{% url 'main' %}" class="tm-nav-link">
+                        <i class="icon homepage"></i>
+                        退出登录
+                    </a></li>
+                   
+                </ul>
+            </nav>
+    </header>
+
+
+
+    <div class="container-fluid">
+        <main class="tm-main">                      
+		{% autopaginate Order_list1 6 %}
+		{% for order in Order_list1 %}
+			{% for keeper in Keeper_list %}
+			{% for user in User_list %}	
+			{% if keeper.keeperNo == order.keeperNo and user.No == order.customerNo %}									
+            <article class="post">
+								<header>
+									<div class="title">
+										<h2><a href="{% url 'sitterInfo' %}?keeperNo={{keeper.keeperNo}}">{{keeper.name}}</a></h2>
+									</div>
+									<div class="meta">
+										<p style="color:red;">{{order.state}}</p>
+										<a href="{% url 'sitterInfo' %}?keeperNo={{keeper.keeperNo}}" class="author"><span class="name">{{keeper.name}}</span><img src="/{{keeper.photo}}" alt="正在加载" /></a>
+									</div>
+                                </header>
+								{% if order.state == "正在进行" %}
+									<a style="color:red;" href="{% url 'pingjia' %}?orderNo={{order.orderNo}}">订单完成</a>
+								{% else %}
+									<a >订单已完成</a>
+								{% endif %}
+								
+
+								<p><strong>时间：</strong>{{order.start_time}}-{{order.end_time}}</br>
+								<strong>服务类型：</strong>{{servicetype}}</br>
+                                <strong>价格：</strong>{{order.money}}元</br>
+								<strong>地址：</strong>{{order.address}}</p>
+			</article>
+			{% endif %}
+			{% endfor %}
+			{% endfor %}
+			{% for user in User_list1 %}	
+			{% for keeper in Keeper_li %}	
+			{% if user.No == order.customerNo and keeper.keeperNo == order.keeperNo  %}							
+            <article class="post">
+								<header>
+									<div class="title">
+										<h2>服务对象：{{user.ID}}</h2>
+									</div>
+									<div class="meta">
+										<p style="color:red;">{{order.state}}</p>
+										<a href="/chat/{{k.No}}/{{user.No}}" class="author"><span class="name">{{user.ID}}</span><img src="/{{user.image}}" alt="正在加载" /></a>
+									</div>
+                                </header>
+								<p><strong>时间：</strong>{{order.start_time}}-{{order.end_time}}</br>
+								<strong>服务类型：</strong>{{servicetype}}</br>
+                                <strong>价格：</strong>{{order.money}}元</br>
+								<strong>地址：</strong>{{order.address}}</p>
+			</article>
+			{% endif %}
+			{% endfor %}
+			{% endfor %}
+		{% endfor %}
+		{% paginate %}
+		{% endfor %}
+		
+
+           
+
+    </div>
+
+            
+    <!--分  <div class="row tm-row tm-mt-100 tm-mb-75">
+                <div class="tm-prev-next-wrapper">
+                    <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
+                    <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
+                </div>
+                <div class="tm-paging-wrapper">
+                    <span class="d-inline-block mr-3">Page</span>
+                    <nav class="tm-paging-nav d-inline-block">
+                        <ul>
+                            <li class="tm-paging-item active">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">1</a>
+                            </li>
+                            <li class="tm-paging-item">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">2</a>
+                            </li>
+                            <li class="tm-paging-item">
+                                <a href="3" class="mb-2 tm-btn tm-paging-link">3</a>
+                            </li>
+                            <li class="tm-paging-item">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">4</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>                
+            </div>            
+
+        </main>
+    </div>页-->
+    <script src="{% static 'js-pmain/jquery.min.js'%}"></script>
+    <script src="{% static 'js-pmain/templatemo-script.js'%}"></script>
+
+    <script>
+			//获取上传按钮
+			var input1 = document.getElementById("upload");
+			if(typeof FileReader === 'undefined') {
+				//result.innerHTML = "抱歉，你的浏览器不支持 FileReader"; 
+				input1.setAttribute('disabled', 'disabled');
+			} else {
+				input1.addEventListener('change', readFile, false);
+ 
+			}
+ 
+			function readFile() {
+				var file = this.files[0]; //获取上传文件列表中第一个文件
+				if(!/image\/\w+/.test(file.type)) {
+					//图片文件的type值为image/png或image/jpg
+					alert("文件必须为图片！");
+					return false;
+				}
+				// console.log(file);
+				var reader = new FileReader(); //实例一个文件对象
+				reader.readAsDataURL(file); //把上传的文件转换成url
+				//当文件读取成功便可以调取上传的接口
+				reader.onload = function(e) {
+ 
+					var image = new Image();
+					// 设置src属性 
+					image.src = e.target.result;
+					var max = 200;
+					// 绑定load事件处理器，加载完成后执行，避免同步问题
+					image.onload = function() {
+						// 获取 canvas DOM 对象 
+						var canvas = document.getElementById("cvs");
+						// 获取 canvas的 2d 环境对象, 
+						var ctx = canvas.getContext("2d");
+						// canvas清屏 
+						ctx.clearRect(0, 0, canvas.width, canvas.height);
+ 
+						ctx.drawImage(image, 0, 0, 200, 200);
+						
+					};
+				}
+			};
+		</script>
+</body>
+</html>

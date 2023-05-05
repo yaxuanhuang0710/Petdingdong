@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% block title %}与 {{ f_obj.ID }} 的聊天{% endblock %}
+{% block content_left %}
+    <div class="chat-case box" >
+        <div id="friend-chat-title">与 {{ f_obj.ID }} 的聊天</div>
+        <ul id="chat-box" class="list-group">
+            {% for h_msg in history_msg %}
+                {% if h_msg.senderNo == u_obj.No %}
+                    {% if h_msg.image %}
+                        <li class="list-group-item pull-right">
+                            <p style="float: right;">{{ h_msg.sender.username }}<span
+                                    class="chat-time">&nbsp;&nbsp;{{ h_msg.create_time|date:'Y-m-d H:i' }} </span></p>
+                            <span class="chat-text-me"><img src="/static/images/{{ h_msg.image }}" height='200px'></span>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item pull-right">
+                            <p style="float: right;">{{ h_msg.sender.username }}<span
+                                    class="chat-time">&nbsp;&nbsp;{{ h_msg.create_time|date:'Y-m-d H:i'}} </span></p>
+                            <span class="chat-text-me">{{ h_msg.text }}</span>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    {% if h_msg.image %}
+                        <li class="list-group-item">
+                            <p>{{ h_msg.sender.username }}<span class="chat-time">&nbsp;&nbsp;{{ h_msg.create_time|date:'Y-m-d H:i' }}</span>
+                            </p>
+                            <span class="chat-text"><img src="/static/images/{{ h_msg.image }} " height='200px'></span>
+                        </li>
+                    {% else %}
+                        <li class="list-group-item">
+                            <p>{{ h_msg.sender.username }}<span class="chat-time">&nbsp;&nbsp;{{ h_msg.create_time|date:'Y-m-d H:i'}}</span>
+                            </p>
+                            <span class="chat-text">{{ h_msg.text }}</span>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            <li class="list-group-item room-hint">---------- 历史消息 ----------</li>
+            {% for msg in history_unread_msg %}
+                {% if msg.image %}
+                    <li class="list-group-item">
+                        <p>{{ msg.sender.username }}<span class="chat-time">&nbsp;&nbsp;{{ msg.create_time|date:'Y-m-d H:i' }}</span>
+                        </p>
+                        <span class="chat-text"><img src="/static/images/{{ h_msg.image }}" height='200px'></span>
+                    </li>
+                {% else %}
+                    <li class="list-group-item">
+                        <p>{{ msg.sender.username }}<span class="chat-time">&nbsp;&nbsp;{{ msg.create_time|date:'Y-m-d H:i' }}</span>
+                        </p>
+                        <span class="chat-text">{{ msg.text }}</span>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div style="display:flex; flex-direction: row;">
+        <div>
+            发送图片：
+        </div><input type="file" id="chat-image-submit" accept="image/*" value="上传图片">
+    </div>
+    <div class="chat-input">
+        <form action="" method="post" id="msg-sub">
+            {% csrf_token %}
+            <div class="form-group form-item">
+                <textarea name="msg_con" id="msg-case"
+                          class="form-control input-con"></textarea>
+            </div>
+            <button type="submit" class="btn btn-default btn-sub">发送</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block bottom_script %}
+    <script>
+        var msg_num = 0;
+        var f_id = {{ f_obj.No }};
+        var u_id = {{ u_obj.No }};
+        var chatFriendSocket = new WebSocket('ws://' + window.location.host +
+            '/ws/chat/' + f_id + '/' + u_id + '/');
+
+        chatFriendSocket.onmessage = function (e) {
+            let data = JSON.parse(e.data);
+            let msg = data['message'];
+            // 如果消息是对话双方，直接显示消息
+            if(msg.user_id == f_id || msg.user_id == u_id){
+                AddMsgToBox(msg);
+            }else{
+                alert('something wrong on message');
+            }
+        };
+
+        // 消息显示在对话框
+        function AddMsgToBox(msg) {
+            // 区分消息是否是自己的
+            var date = new Date(msg.create_time);
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var month = ('0' + month).slice(-2)
+            var day = date.getDate();
+            var day = ('0' + day).slice(-2)
+            var hours = date.getHours();
+            var hours = ('0' + hours).slice(-2)
+            var minutes = date.getMinutes();
+            var minutes = ('0' + minutes).slice(-2)
+            var display_time = year + "-" + month + "-" + day + " " + hours + ":" + minutes
+
+            if (msg.user_id == u_id){
+                if (msg.message_type == "image"){
+                    message = '<img src="'+ msg.message_data +'" height="200px">';
+                    var msg_html = '<li class="list-group-item pull-right"><p style="float: right;">' +
+                    '<span class="chat-time">&nbsp;&nbsp;' + display_time +
+                    '</span></p><span class="chat-text-me">' + message + '</span></li>';
+                }else {
+                    var msg_html = '<li class="list-group-item pull-right"><p style="float: right;">' +
+                    '<span class="chat-time">&nbsp;&nbsp;' + display_time +
+                    '</span></p><span class="chat-text-me">' + msg.message_data + '</span></li>';
+                }
+
+                $('#chat-box').append(msg_html);
+            }else{
+                if (msg.message_type == "image"){
+                    message = '<img src="'+ msg.message_data +'" height="200px">';
+                    var msg_html = '<li class="list-group-item"><p>' +
+                    '<span class="chat-time">&nbsp;&nbsp;' + display_time +
+                    '</span></p><span class="chat-text">' + message + '</span></li>';
+                }else{
+                    var msg_html = '<li class="list-group-item"><p>' +
+                    '<span class="chat-time">&nbsp;&nbsp;' + display_time +
+                    '</span></p><span class="chat-text">' + msg.message_data + '</span></li>';
+                }
+
+                $('#chat-box').append(msg_html);
+            }
+
+            $('.chat-case').scrollTop(2000);
+        }
+
+        // 发送消息
+        $('#msg-sub').submit(function (e) {
+            e.preventDefault();
+            var msg = $('#msg-case').val();
+
+            if(msg){
+                // 发送消息至websocket
+                chatFriendSocket.send(JSON.stringify({
+                    'message': msg,
+                    'message_type': 'text'
+                }));
+            }else{
+                alert('评论不能为空')
+            }
+
+            $('#msg-case').val('')
+        });
+        document.querySelector('#chat-image-submit').onchange = function (e) {
+            var files = this.files;
+            var file = files[0];
+            var reader = new FileReader();
+            reader.readAsBinaryString(file);
+            console.log(file);
+            reader.onload = function() {
+                var base64 = btoa(reader.result);
+                var message = "data:"+file.type+";base64,"+base64;
+                console.log(message);
+                chatFriendSocket.send(JSON.stringify({
+                    'message': message,
+                    'message_type': 'image'
+                }));
+            };
+
+        };
+
+
+        //监听窗口关闭事件，当窗口关闭时，主动去关闭WebSocket连接
+        window.onbeforeunload=function(){
+            chatFriendSocket.close();
+        };
+
+        // 页面加载完 滚动条自动到底部
+        $(function () {
+            $('.chat-case').scrollTop(2000);
+        });
+
+        $('#msg-case').focus();
+
+        // 组合键ctrl + enter 发送消息
+        $(document).keypress(function(e) {
+            if (e.which === 13)
+                $('.btn-sub').click();
+        });
+
+    </script>
+{% endblock %}

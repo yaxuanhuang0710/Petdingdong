@@ -1,0 +1,242 @@
+{% load static %}
+{% load pagination_tags %}
+<html>
+	<head>
+		<title>PetDingdong-communication</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets-comm/css/main.css'%}" />
+		 <link rel="stylesheet" href="{% static 'css/semantic.css'%}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'custom.css'%}" media="screen" title="no title" charset="utf-8">
+
+
+
+
+<style>
+.image.comment {
+				display: block;
+				width: 50px;
+				height: 50px;
+			}
+</style>
+
+
+
+</head>
+	<body class="single is-preload">
+<body>
+
+<!--导航栏-->
+        <div class="ui inverted fixed menu" style="height:50px;background:rgba(4, 5, 20, 0.356)">
+            <div class="ui container">
+            <div class="ui image"style="margin-top:10px;width:110px;"><a href="{% url 'mainin' %}">
+                <img src="{% static 'images/largelogo.png '%}" alt="" /></div>
+            <a href="{% url 'search' %}" class="item">寻找饲养员</a>  
+            </a>
+            <a href="{% url 'identification' %}" class="item">成为饲养员</a>
+            <a href="{% url 'multi' %}" class="item"></i>宠物广场</a>
+            <a href="{% url 'Help' %}" class="item">帮助</a>
+            
+            <div class="right menu">
+                {% for login1 in login_User %}
+                <a href="{% url 'pmain' %}" class="item">{{login1.ID}}</a>
+                {% endfor %}
+            </div>
+    
+            </div>
+        </div>
+<!--导航栏结束-->
+
+        <div class="ui vertical basic segment masthead single" >
+
+
+				<!-- Main -->
+					<div id="main" style="margin-top:100px;">
+						{% for ar in article  %}
+					
+						
+						<!-- Post -->
+							<article class="post">
+								<header>
+									<div class="title">
+										<h2>{{ar.headline}}</a></h2>
+									
+									</div>
+									{% for user in User_list %}
+									{% if user.No == ar.authorNo %}																																			
+									<div class="meta">
+										<time class="published" datetime="2020-08-07">{{ar.date}}</time>
+										<a href="/chat/{{login_No}}/{{user.No}}" class="author"><span class="name">{{user.ID}}</span><img src="/{{user.image}}" alt="" /></a>
+									</div>
+									{% endif %}
+									{% endfor %}
+								</header>
+								<span class="image featured"><img width="100" src="/{{ar.image}}" alt="正在加载" /></span>
+								<p style="white-space: break-spaces">{{ar.content}}</p>
+								<footer>
+									<ul class="stats">
+										<li><a href="{% url 'multi' %}">返回广场</a></li>
+										<li><a class="icon solid fa-heart"><span class="count">{{ar.likes}}</span></a></li>
+									</ul>
+								</footer>
+
+
+								{% autopaginate Comment_list 6 %}
+								
+								{% for comment in Comment_list %}
+								<div class="ui vertical basis segment" style="margin:0 10px 0 10px;">
+								{% for user in User_list %}
+									{% if user.No == comment.userNo %}								
+									<a href="/chat/{{login_No}}/{{user.No}}" class="author"><span class="name">{{comment.time}} /{{user.ID}}</span><img src="/{{user.image}}" alt="" /></a>
+  						     		<div>{{ comment.text }}</div>
+  						     	<!--回复<button >回复</button>-->	
+									{% endif %}
+									
+								{% endfor %}
+								</div>
+								{% endfor %}
+								<br>
+                                {% paginate %}
+
+
+
+
+
+							
+							
+							<form  method='POST'  >
+       						{% csrf_token %}
+								<div id="div1" style="margin-top:50px;" >
+									<div class"ui grid">
+									<div class="ten wide column">
+										
+
+
+										<div class="ui input">
+		<textarea type="text" name="text" name="content" id="btn1" placeholder="说点儿什么吧..." class="contain form-control" style="font-size:15px;width:900px;height:140px;line-heigt:200px;"></textarea>
+    </div>
+									</div>
+									<br>
+									<div class="two wide column">
+										<input type="submit" value="评论" id="btn1" />
+									</div>
+									</div>
+								</div> 
+								{% endfor %}
+							</form>
+							</article>
+						
+						
+					</div>
+
+
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js'%}"></script>
+			<script src="{% static 'assets/js/browser.min.js'%}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js'%}"></script>
+			<script src="{% static 'assets/js/util.js'%}"></script>
+			<script src="{% static 'assets/js/main.js'%}"></script>
+<script>
+var heart = document.getElementsByClassName("solid fa-heart");
+    var span = document.getElementsByClassName("count");
+    for(var i = 0 ; i < heart.length ; i++){
+        var count;//计数器  总收藏量
+        (function(i){
+            var flag = true; //点击收藏
+            // 点击收藏 【心】 事件
+            heart[i].onclick = function(){
+                if(flag){ //点击收藏
+                    flag = false;
+                    // 添加样式
+                    this.className = "icon solid fa-heart active";
+                    ++span[i].innerHTML;  //点击收藏 在收藏量 基础上 增1
+                    var digg_type = "up";
+                }else{ //点击取消收藏
+                    flag = true;
+                    this.className = "icon solid fa-heart";
+                    --span[i].innerHTML; //点击取消收藏 在收藏量 基础上 减1
+                    var digg_type = "down";
+                }; 
+                $.ajax({
+                    url: '/digg/',
+                    type: "post",
+                    data:{
+                        'csrfmiddlewaretoken': '{{csrf_token}}',
+                        'article_id': "{{article_id}}",
+                        'digg_type': digg_type,
+                    },
+                    success: function(data){
+                    },
+
+                    error: function(xhr, ajaxOptions, thrownError){
+                        alert(thrownError);
+                    }
+                });
+            };
+        })(i); 
+    }
+</script>
+
+
+
+
+<script>
+window.onload=function(){
+var oTxt = document.getElementById("txt");
+var oBtn = document.getElementById("btn1");
+var oUl1 = document.getElementById("ul1");
+ 
+ 
+oBtn.onclick=function(){
+var oBox = document.createElement("div");
+oBox.className = "box";
+ 
+//创建头像
+var oDiv = document.createElement("div");
+oDiv.className = "touxiang";
+oBox.appendChild(oDiv);
+ 
+var oDiv = document.createElement("div");
+oDiv.className = "nicheng";
+oDiv.innerHTML = "怂怂怪";
+oBox.appendChild(oDiv);
+ 
+var oDiv = document.createElement("div");
+oDiv.className = "pinglun";
+oDiv.innerHTML = oTxt.value;
+oBox.appendChild(oDiv);
+ 
+var oDiv = document.createElement("div");
+oDiv.className = "shijian";
+var oDate = new Date();
+//oDate.getFullYear
+ 
+oDiv.innerHTML ="评论时间&nbsp;&nbsp;"+ oDate.getFullYear()+"年"+(oDate.getMonth()+1)+"月"+oDate.getDate()+"日";
+ 
+ 
+ 
+ 
+oBox.appendChild(oDiv);
+ 
+oUl1.appendChild(oBox);
+ 
+/*oBox.insertBefore(oUl1,oDiv[0]);*/
+ 
+var aA = oDiv.getElementsByTagName("a");
+ 
+for(var i = 0;i<aA.length;i++)
+{
+aA[i].onclick=function(){
+oDiv.removeChild(this.parentNode);
+}
+}
+ 
+}
+}
+ 
+</script>
+
+
+	</body>
+</html>
